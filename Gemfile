@@ -10,3 +10,5 @@ group :development do
   gem 'bourbon', '~> 4.2', '>= 4.2.6'
   gem 'pygments.rb', '~> 0.6.3'
 end
+
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
