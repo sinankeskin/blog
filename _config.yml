@@ -1,7 +1,7 @@
 
 # SEO settings
-title: "Sinan"
-title2: "Keskin" # default: ""
+title: "Khons"
+title2: "Blog" # default: ""
 description: "Sinan Keskin aka Khons blog."
 keywords: "Blog about C#, Java, Ruby"
 url: http://kesk.in # site url
