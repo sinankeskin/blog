@@ -14,7 +14,7 @@ Bir ``Gemfile`` Ruby programlarımızdaki gem bağımlılıklarını tanımlamak
 
 ``Gemfile``'ın bir Ruby kodu olarak değerlendirileceğini bilmek faydalı olur. ``Gemfile`` içeriği Bundler tarafından değerlendirildikten sonra gem bağımlılıklarımızdaki belli metotlara ulaşabilmemize olanak sağlayacaktır.
 
-**``Gemfile`` ayarlamak**
+**Gemfile ayarlamak**
 
 İlk yapmamız gereken şey ``Gemfile``’a gem’leri arayacağı yeri söylemek olacaktır. Bu da (``source``) kaynak belirtmektir. Bunun için ``source`` metodunu kullanırız.
 
@@ -277,7 +277,7 @@ Gem'iniz için isterseniz bir dal (branch), etiket (tag) ya da referans (ref) be
 ``submodules: true`` parametresini göndererek Bundler'ın alt modülleri de yüklemesini sağlayabilirsiniz.
 
 {% highlight ruby %}
-gem "my_gem", git: "ssh@githib.com/sinankeskin/my_gem", branch: test_branch, submodules: true
+gem "my_gem", git: "ssh@github.com/sinankeskin/my_gem", branch: test_branch, submodules: true
 {% endhighlight %}
 
 Eğer aynı git deposundan birden fazla gem yüklemek istiyorsanız bir blok kullanabilirsiniz.
