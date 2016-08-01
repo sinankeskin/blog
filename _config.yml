@@ -1,18 +1,18 @@
 
 # SEO settings
-title: "Khons"
-title2: "Blog" # default: ""
+title: "Sinan"
+title2: "Keskin" # default: ""
 description: "Sinan Keskin aka Khons blog."
-keywords: "Blog about .NET, C#, Java, Ruby"
-url: http://sinankeskin.github.io/ # site url
+keywords: "Blog about C#, Java, Ruby"
+url: http://kesk.in # site url
 baseurl: null # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
 google_analytics: UA-XXXXX-XX
-repo: http://github.com/heiswayi/thinkspace
-disqus_shortname: "heiswayi"
-twitter_username: "HeiswayiNrird"
-comments: true
+repo: http://github.com/sinankeskin/sinankeskin.github.io
+disqus_shortname: ""
+twitter_username: "_khons"
+comments: false
 
 # Build settings
 permalink   : /:year/:title/
@@ -31,10 +31,10 @@ sass:
 author:
   name     : "Sinan Keskin"
   job      : "Freelance Developer"
-  bio      : ".NET, Java, Ruby."
+  bio      : "C#, Java, Ruby"
   thumb    : /images/author.jpg
   email    : sinan@kesk.in
-  url      : http://sinankeskin.github.io
+  url      : http://kesk.in
   github   : http://github.com/sinankeskin
   twitter  : http://twitter.com/_khons
   facebook : https://www.facebook.com/profile.php?id=1257583160
@@ -51,8 +51,8 @@ gems:
 
 # navbar pages
 navbar:
-  - slug : about
-    title: About
+  - slug : hakkimda
+    title: Hakkımda
   - slug : blog
     title: Blog
 

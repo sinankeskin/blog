@@ -1,299 +1,373 @@
 ---
 layout: post
 title:  "Gemfile nedir?"
-date:   2016-08-01 15:43:37 +0200
-categories: ruby gemfile
+date:   2016-08-01 00:00:00 +0200
+categories: jekyll update
 ---
-Ruby developers use Gemfiles all the time, and most of us know how to do the basics. In this post I want to dive deep into everything we can do with a Gemfile.
-What is a Gemfile?
+Ruby geliştiricileri sıklıkla ``Gemfile`` kullanır ve bir çoğumuz temel özelliklerini biliriz. Bu makalede ``Gemfile`` için inebildiğimiz kadar derine inmeye çalışacağız.
 
-A Gemfile is a file we create which is used for describing gem dependencies for Ruby programs. A gem is a collection of Ruby code that we can extract into a “collection” which we can call later.
+**Gemfile nedir?**
 
-Your Gemfile should always be in the root of your project directory, this is where Bundler expects it to be and it is the standard place for any package manager style files to live.
+Bir ``Gemfile`` Ruby programlarımızdaki gem bağımlılıklarını tanımlamak için kullandığımız bir dosyadır. Bir gem ise birçok Ruby dosyasından oluşan ve daha sonra kullanabileceğimiz bir kod koleksiyonudur.
 
-It is useful to note that your Gemfile is evaluated as Ruby code. When it is evaluated by Bundler the context it is in allows us access to certain methods that we will use to explain our gem requirements.
-Setting up a Gemfile
+``Gemfile`` dosyanız her zaman projenizin kök dizininde bulunmalıdır. Burası dosyayı ararken varsayılan olarak ``Bundler``'ın ve diğer herhangi bir paket yöneticisinin ilk bakacağı standart konumdur.
 
-The first thing we need to do is tell the Gemfile where to look for gems, this is called the source.
+``Gemfile``'ın bir Ruby kodu olarak değerlendirileceğini bilmek faydalı olur. ``Gemfile`` içeriği Bundler tarafından değerlendirildikten sonra gem bağımlılıklarımızdaki belli metotlara ulaşabilmemize olanak sağlayacaktır.
 
-We use the #source method for doing this.
+**``Gemfile`` ayarlamak**
 
+İlk yapmamız gereken şey ``Gemfile``’a gem’leri arayacağı yeri söylemek olacaktır. Bu da (``source``) kaynak belirtmektir. Bunun için ``source`` metodunu kullanırız.
+
+{% highlight ruby %}
 source "https://rubygems.org"
+{% endhighlight %}
 
-It isn’t recommended to have more than one source per project. For 99% of projects that require a Gemfile your source will be set to https://rubygems.org. The only requirement for a source is that it must be a valid Rubygems repository.
-Source Priority
+Projeler için birden fazla kaynak belirtmek önerilmez. %99 ihtimalle projenizin ``Gemfile``’ında kaynak olarak ``https://rubygems.org`` belirtilmesi yeterli olacaktır. Kaynak için tek şart geçerli bir Rubygems deposu olmasıdır.
 
-Now seems like a good time to discuss source priority.
+**Kaynak öncelik sırası**
 
-As well as defining a source at the top of our Gemfile we can define a source against each gem we are loading in. We can also define a path for a local gem or a git path for a gem hosted somewhere like GitHub (we will get to these later).
+Şu anda kaynaklar için öncelik sırasından bahsetmenin tam sırası.
 
-When Bundler attempts to locate a gem it will look first at what has been explicitly set on the gem and use that.
+Her ne kadar ``Gemfile``'ın ilk satırında kaynak belirtebilsek bile yüklemek istediğimiz her gem için ayrı ayrı kaynak da belirtebiliriz. Ayrıca yerel bilgisayarımızda bulunan bir gem için dizin yolunu ya da GitHub gibi gem yayınlanan bir alanın adresini belirtebiliriz (Daha sonra bu konudan bahsedeceğiz).
 
-If you set up a gem using source, path, or git any dependencies for that gem will look in those locations first before trying anywhere else.
+Bundler gem'i aramaya başlamadan önce ilk olarak gem için açıkça bir kaynak belirtilip belirtilmediğine bakar.
 
-If nothing has been explicitly set Bundler will look at the sources you have defined, starting at the first one and working down.
+Eğer kaynak, yol ya da git adresi belirtildiyse gem ilk olarak burada aranacaktır.
 
-If a gem is found in more than one global source (this should rarely be the case because you should only really have one source) then you will get a warning explaining which gem source has been used.
+Eğer açıkça herhangi bir kaynak belirtilmediyse Bundler ilk satırda belirtilen kaynakta aramaya başlayacaktır.
 
-You can call #source as a block;
+Eğer gem birden fazla kaynakta bulunursa (ki bu nadiren gerçekleşir çünkü yalnızca bir adet kaynak belirtmelisiniz) hangi gem'in kullanılacağının bilinemediği konusunda bir uyarı mesajı ile karşılaşırsınız.
 
+Kaynakları bir blok içerisinde de belirtebilirsiniz.
+
+{% highlight ruby %}
 source "https://my_awesome_source.com" do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-Sources with Credentials
+**Kullanıcı bilgileri ile kaynaklar**
 
-Some sources you use will require credentials to be set.
+Bazı kaynaklar kullanıcı bilgileri ile kullanılıyor olabilir.
 
-Bundle has a config option that allows you to set a username and password for each source;
+Bundler'ın her kaynak için kullanıcı adı ve parola belirtmenizi sağlayan bir konfigürasyon seçeneği vardır.
 
-bundle config my_gem_source.com my_username:my_password
+``bundle config my_gem_source.com my_username:my_password``
 
-This will need to be set up by anyone who wants access to install gems using Bundler as it doesn’t go into version control (which is one of the nice things about doing it this way).
+Bu kaynağı Bundler ile gem yüklemek için kullanmak isteyen herkes versiyon kontrolüne girmeden kullanıcı bilgilerini girmek zorundadır (ki bu kullanımın en iyi yanı da bu).
 
-You can also set you credentials straight in the Gemfile, of course when you do it this way your details will be committed into version control.
+Kullanıcı bilgilerini tabii ki ``Gemfile`` içerisine de ekleyebilirsiniz, ancak bu şekilde bir kullanımın versiyon kontrolüne gönderilebileceğini unutmayın.
 
+{% highlight ruby %}
 source "https://username:password@my_gem_source.com"
+{% endhighlight %}
 
-Anything you specify in the source will override anything you have set using bundle config.
-Setting up Ruby information
+Yukarıdaki örnekteki gibi, kaynak için belirtilen bilgiler Bundler konfigürasyonunda belirtilen bilgileri ezecektir.
 
-If the application you are creating requires a specific Ruby version or engine we can set this in the Gemfile.
+**Ruby bilgilerini ayarlamak**
 
+Eğer oluşturduğunuz uygulama belli Ruby versiyonuna ya da motoruna ihtiyaç duyuyorsa bunu ``Gemfile`` içerisinde belirtebilirsiniz.
+
+{% highlight ruby %}
 ruby "1.9.3", :patchlevel => "247", :engine => "jruby", :engine_version => "1.6.7"
+{% endhighlight %}
 
-When setting this up the only required bit of information is the ruby version (in our example 1.9.3).
+Bu ayarları yapmak Ruby versiyonu hakkında belli başlı bilgilere gerek duyar (örneğimizde 1.9.3).
 
-    The :patchlevel specifies the patch level for Ruby.
-    The :engine specifies the Ruby engine to be used.
-    The :engine_version specifies the version of the engine being used. If this is set then :engine also needs to be set.
+- :patchlevel kullanılacak Ruby yama numarasını belirtir.
+- :engine kullanılacak Ruby motorunu belirtir.
+- :engine_version kullanılacak motor versiyonunu belirtir. Eğer bu ayar girilirse :engine ayarının da girilmesi gerekir.
 
-Setting up your Gems
+**Gem'lerin ayarlanması**
 
-Now onto the main point of using a Gemfile, setting up the gems!
+Şimdi ``Gemfile``'ın asıl görevi olan gem'lerin ayarlanmasına geldik.
 
-The most basic syntax is;
+En basit yazım;
 
+{% highlight ruby %}
 gem "my_gem"
+{% endhighlight %} şeklindedir.
 
-In this case my_gem is the name of the gem. The name is the only thing that is required, there are several optional parameters that you can use.
-Setting the version of a Gem
+Burada my_gem gem'in ismidir. Kullanabileceğiniz bir çok seçenek vardır ancak sadece isim seçeneği zorunludur.
 
-The most common thing you will want to do with a gem is set its version.
+**Gem'in versiyonunun ayarlanması**
 
-If you don’t set a version you are basically saying any version will do;
+En sıklıkla karşılaşacağınız istek gem'in versiyonunun ayarlanması olacaktır.
 
+Eğer herhangi bir versiyon ayarlamak istemiyorsanız temel olarak;
+
+{% highlight ruby %}
 gem "my_gem", ">= 0.0"
+{% endhighlight %} şeklinde bir yazım kullanabilirsiniz.
 
-There are seven operators you can use when specifying your gems.
+Versiyon ayarlarken kullanabileceğiniz **7** adet operatör vardır.
 
-    = Equal To "=1.0"
-    != Not Equal To "!=1.0"
-    > Greater Than ">1.0"
-    < Less Than "<1.0"
-    >= Greater Than or Equal To ">=1.0"
-    <= Less Than or Equal To "<=1.0"
-    ~> Pessimistically Greater Than or Equal To "~>1.0"
+- Eşit ``=`` "=1.0"
+- Eşit Değil ``!=`` "!=1.0"
+- Büyük ``>`` ">1.0"
+- Küçük ``<`` "<1.0"
+- Büyük ya da Eşit ``>=`` ">=1.0"
+- Küçük ya da Eşit ``<=`` "<=1.0"
+- Karamsar Büyük ya da Eşit ``~>`` "~>1.0"
 
-Pessimistically Greater Than or Equal To
+**Karamsar büyük ya da eşit**
 
-The ~> operator allows you to say that your application will work with future versions of a gem in a safe way.
+~> operatörü gem'in gelecek versiyonlarında da çalışacağını güvenli bir şekilde kontrol altına almanıza izin verir.
 
-If you feel that the gem you are including is safe for an entire version you can specify;
+Eğer uygulamanıza eklemek istediğiniz gem'in tüm versiyonunun sorunsuzca çalışacağından eminseniz;
 
+{% highlight ruby %}
 gem "my_gem", "~> 2.0"
+{% endhighlight %} şeklinde bir yazım kullanabilirsiniz.
 
-This will allow any version of 2.x to be installed, but nothing from version 3.x
+Bu size herhangi bir 2.x versiyonunu yüklemenize izin verecek ancak herhangi bir 3.x versiyonunu yüklemenizi engelleyecektir.
 
-Perhaps you don’t feel comfortable giving a gem such a wide remit, in that case you can specify a more specific version;
+Belki de bu kadar geniş bir versiyon aralığı vermek istemeyebilirsiniz, bu durumda daha kesin bir aralık belirtebilirsiniz.
 
+{% highlight ruby %}
 gem "my_gem", "~> 2.5.0"
+{% endhighlight %}
 
-This will allow anything from 2.5.0 up to anything below 2.6.0.
+Bu size 2.5.0 ile 2.6.0 aralığında herhangi bir versiyon yüklemenize izin verir.
 
-The following conversions might help you to understand it better;
+Aşağıdaki tablo daha iyi anlamanıza yardımcı olabilir.
 
-    gem "my_gem", "~> 1.0" –> gem "my_gem", ">= 1.0", "< 2.0"
-    gem "my_gem", "~> 1.5.0" –> gem "my_gem", ">= 1.5.0", "< 1.6.0"
-    gem "my_gem", "~> 1.5.5" –> gem "my_gem", ">= 1.5.5", "< 1.6.0"
+{% highlight ruby %}
+gem "my_gem", "~> 1.0" –> gem "my_gem", ">= 1.0", "< 2.0"
+gem "my_gem", "~> 1.5.0" –> gem "my_gem", ">= 1.5.0", "< 1.6.0"
+gem "my_gem", "~> 1.5.5" –> gem "my_gem", ">= 1.5.5", "< 1.6.0"
+{% endhighlight %}
 
-Setting your Gem to be Required
+**Gem'i gerekli işaretlemek**
 
-If you are using Rails this bit of “magic” may have been hidden from you, but inside your config/application.rb you will see the following line;
+Eğer Rails kullanıyorsanız bazı sihirler sizden saklanıyor olabilir ancak örneğin ``config/application.rb`` dosyanızda şöyle bir satır görebilirsiniz.
 
+{% highlight ruby %}
 Bundler.require(:default, Rails.env)
+{% endhighlight %}
 
-This means require all the gems that haven’t been assigned a group and require all the gems that have been assigned a group of the same name as your Rails environment (for example test, or development).
+Bu satır herhangi bir gruba atanmamış ve o anki Rails ortamı ile aynı gruba (örneğin test, development) atanmış gem'lerin uygulamanıza dâhil edilmesine olanak sağlar.
 
-By default if you include a gem in your Gemfile it will be included when Bundler.require is called. We can stop this by setting require to false;
+``Gemfile``'a bir gem eklediğinizde bu gem ``Bundler.require`` çağırıldığında varsayılan olarak uygulamanıza dâhil edilecektir. Bunu ``require`` ayarını ``false`` yaparak engelleyebiliriz.
 
+{% highlight ruby %}
 gem "my_gem", require: false
+{% endhighlight %}
 
-You can also specify which folder(s) should be required when your gem is included;
+Hangi klasörlerin de dâhil edilebileceğini ayrıca belirtebilirsiniz.
 
+{% highlight ruby %}
 gem "my_gem", require: ["my_gem/specific_module/my_class", "my_gem"]
+{% endhighlight %}
 
-This is useful when your gem has a lot of functionality that you need to manually require each time you want to call it.
-Grouping your Gem
+İçerisinde çok fazla işlev bulunan bir gem'den dâhil edilecek sınıfları her seferinde manuel olarak eklemeniz gerektiğinde çok faydalı olacaktır.
 
-As I mentioned a gem can belong to one or more groups. When it doesn’t belong to any groups it is put into the :default group.
+**Gem'leri gruplamak**
 
-There are two ways you group a gem. The first is by assigning a value to the :group property;
+Daha önce bahsettiğimiz gibi bir gem bir ya da birden fazla gruba dâhil olabilir. Eğer herhangi bir gruba dâhil değilse otomatik olarak ``:default`` grubuna dâhil edilir.
 
+Gem gruplamak için iki yöntem bulunmaktadır. İlki ``:group`` özelliğini kullanmaktır.
+
+{% highlight ruby %}
 gem "my_gem", group: :development
+{% endhighlight %}
 
-This means it will only be required when the development environment is running.
+Bu gem sadece development ortamında çalışılırken dâhil edilecek demektir.
 
-It also means when you are installing gems (with bundle install) that you can specify certain groups to not install. This can speed up the install time for new projects considerably.
+Ayrıca bundle install ile gem'leri yüklerken belli grubu yüklemeyi istemediğinizde bunu belirtebilmenizi de sağlar. Yükleme süresini gözle görülür derecede azaltacaktır.
 
-bundle install --without development test
+``bundle install --without development test``
 
-Would install everything except gems in the development or test group.
+Yukarıdaki satır development ya da test ortamları dışındaki tüm gem'leri yükleyecektir.
 
-The second way you can decide a grouping for a gem is by setting your gems up inside a block;
+Gem'leri gruplamak için ikinci yöntem ise bir blok içerisine almaktır.
 
+{% highlight ruby %}
 group :development do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-This is visually more pleasing, and you can combine groups;
+Bu yöntem hem göze daha hoş gelecek hem de grupları birleştirmenize olanak sağlayacaktır.
 
+{% highlight ruby %}
 group :development, :test do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-If there is a group you want to be optional you can pass optional: true before the block;
+Eğer bir grubu opsiyonel olarak işaretlemek istiyorsanız bloktan önce ``optional: true`` parametresini gönderebilirsiniz.
 
+{% highlight ruby %}
 group :development, optional: true do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-When this is set in order for it to be installed the user has to perform bundle install --with development
-Setting a Platform for your Gem
+Eğer grup yukarıdaki gibi opsiyonel olarak işaretlenmişse kullanıcı bu gem'leri sadece ``bundle install --with development`` komutları ile yükleyebilir olacaktır.
 
-If a gem should only be used on a particular platform (or set of platforms) then you can specify so in the Gemfile.
+**Gem için platform ayarlamak**
 
-Platforms work in much the same way as groups, expect that you do not need to run calls with the --without flag as this will happen automatically.
+Eğer bir gem sadece belli platform ya da platformlarda kullanılabilir ise bunu ``Gemfile`` içerisinde belirtebilirsiniz.
 
+Platform belirtmek grup belirtmek ile aynı şekilde yapılır. Tek fark yükleme ``--without`` parametresini belirtmek zorunda kalmadan otomatik olarak yapılır.
+
+{% highlight ruby %}
 gem "my_gem", platform: :jruby
 gem "my_other_gem", platform: [:ruby, :mri_18]
+{% endhighlight %}
 
-Here is a list of all the different platforms you can ask your gem to install under.
+Gem için belirtebileceğiniz platformların listesi şöyledir.
 
-    ruby – C Ruby (MRI) or Rubinius, but not Windows
-    ruby_18 to ruby_22 – ruby & (version 1.8 .. version 2.2)
-    mri – Same as ruby, but not Rubinius
-    mri_18 to mri_22 – mri & (version 1.8 .. version 2.2)
-    rbx – Same as ruby, but only Rubinius (not MRI)
-    jruby – JRuby
-    mswin – Windows
-    mingw – Windows 32 bit mingw32 platform (aka RubyInstaller)
-    mingw_18 to mingw_22 – mingw & (version 1.8 .. version 2.2)
-    x64_mingw – Windows 64 bit mingw32 platform
-    x64_mingw_20 to x64_mingw_22 – x64_mingw & (version 2.0 .. version 2.2)
+- ruby – C Ruby (MRI) ya da Rubinius, Windows hariç
+- ruby_18 ile ruby_22 arası – ruby & (versiyon 1.8 ile versiyon 2.2 arası)
+- mri – Ruby ile aynı, Rubinius hariç
+- mri_18 ile mri_22 arası – mri & (versiyon 1.8 ile versiyon 2.2 arası)
+- rbx – Ruby ile aynı, sadece Rubinius (MRI değil)
+- jruby – JRuby
+- mswin – Windows
+- mingw – Windows 32 bit mingw32 platformu (RubyInstaller)
+- mingw_18 ile mingw_22 arası – mingw & (versiyon 1.8 ile versiyon 2.2 arası)
+- x64_mingw – Windows 64 bit mingw32 platformu
+- x64_mingw_20 ile x64_mingw_22 arası – x64_mingw & (versiyon 2.0 ile versiyon 2.2 arası)
 
-I have found platforms really helpful when a development team are working across different platforms, if one of your developers is running Windows you might need different versions of gems depending on what is supported.
+Eğer geliştirme takımı farklı platformlardaysa bu ayarlar çok faydalı olacaktır. Eğer bir geliştirici Windows üzerinde geliştirme yapıyorsa destek verilen gem'leri değiştirmek isteyebilirsiniz.
 
-I normally use the block syntax when using platforms;
+Normalde platform belirlerken ben blok yazım stilini kullanıyorum.
 
+{% highlight ruby %}
 platforms :jruby do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-Setting a source for you Gem
+**Gem için kaynak belirtmek**
 
-As I mentioned earlier there is a notion of setting sources for your gems.
+Daha önce bahsettiğimiz gibi gem için kaynak belirtmek için belli bir ayar vardır.
 
-This is done in the following way;
+Örnek olarak şu şekilde yazılabilir.
 
+{% highlight ruby %}
 gem "my_gem", source: "https://my_awesome_gemsite.com"
+{% endhighlight %}
 
-If the gem isn’t found at this source it will not fall back to being searched for in the default source, it just will not install.
-Installing a Gem from Git
+Eğer gem kaynakta bulunamazsa varsayılan kaynakta aranmayacak ve yüklenmeyecektir.
 
-You can set your install location to be from a git repository (such as Github). This acts in much the same way as changing the :source parameter.
+**Git'ten gem yüklemek**
 
-gem "my_gem", git: "ssh@githib.com/tosbourn/my_gem"
+Yükleme kaynağı olarak bir git deposunu belirtebilirsiniz (örneğin GitHub). Bu tıpkı ``:source`` parametresini kullanmak gibidir.
 
-Whilst you can link to the repository using HTTP(S), SSH and git protocols it is highly recommended that you use only HTTPS and SSH since the others could leave you victim to a man-in-the-middle attack.
+{% highlight ruby %}
+gem "my_gem", git: "ssh@github.com/sinankeskin/my_gem"
+{% endhighlight %}
 
-If you are storing your gem in a repository it should contain at least one file at the root of the directory with a .gemspec extension. This should contain a valid gem specification.
+Her ne kadar git deponuzu HTTP(S), SSH ve GIT protokolleri üzerinden kullanabilir olmanıza rağmen sadece HTTPS ve SSH üzerinden kullanmanız ortadaki adam (man-in-the-middle) saldırısı ile karşı karşıya kalmanızı engelleyecektir.
 
-If you don’t provide this file then Bundler will try and create one, but it shouldn’t be relied upon. If you do try and include a gem hosted on a git repository without a .gemspec you need to have a version for your gem specified.
+Eğer gem'inizi bir git deposunda saklıyorsanız içerisinde en az bir ``.gemspec`` uzantılı dosya ve bu dosyada geçerli bir gem spesifikasyonu olmak zorundadır.
 
-You can set either a branch, tag, or ref for your gem. The default is branch: "master"
+Eğer bu dosyayı sağlamazsanız Bundler sizin için oluşturmaya çalışacaktır, ancak buna güvenmemelisiniz. Eğer bir git deposundan ``.gemspec`` olmaksızın bir gem yüklemeye çalışırsanız gem için bir versiyon belirtmek zorunda kalacaksınız.
 
-You can also force Bundler to expand any submodules hosted in the git repository by passing in submodules: true
+Gem'iniz için isterseniz bir dal (branch), etiket (tag) ya da referans (ref) belirtebilirsiniz. Varsayılan dal ``master``'dır.
 
-gem "my_gem", git: "ssh@githib.com/tosbourn/my_gem", branch: test_branch, submodules: true
+``submodules: true`` parametresini göndererek Bundler'ın alt modülleri de yüklemesini sağlayabilirsiniz.
 
-If you have several gems you want to load in from the same git repository you can use a block;
+{% highlight ruby %}
+gem "my_gem", git: "ssh@githib.com/sinankeskin/my_gem", branch: test_branch, submodules: true
+{% endhighlight %}
 
-git "git@github.com:tosbourn/my_gems.git" do
+Eğer aynı git deposundan birden fazla gem yüklemek istiyorsanız bir blok kullanabilirsiniz.
+
+{% highlight ruby %}
+git "git@github.com:sinankeskin/my_gems.git" do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-Setting Git as a Source
+**Kaynak olarak git belirtmek**
 
-You can set a URL to act as a more generalised source of information for your gems. You do this by calling #git_source and passing in a name as an argument and a block which receives one argument and returns a string for the full repository address.
+Gem'leriniz için ortak bir kaynak oluşturan URL belirtebilirsiniz. ``#git_source`` kullanarak bunu yapabilir ve ismi göndererek tam depo adresini bloktan geri döndürebilirsiniz.
 
+{% highlight ruby %}
 git_source(:custom_git){ |repo| "https://my_secret_git_repos.com/#{repo}.git" }
-gem "my_gem", custom_git: "tosbourn/test_repo"
+gem "my_gem", custom_git: "sinankeskin/test_repo"
+{% endhighlight %}
 
-Bitbucket and Github helper methods
+**Bitbucket ve Github yardımcı metodları**
 
-Since both Bitbucket and Github are popular places to house git repositories there are helper methods made for them.
+Hem Bitbucket hem de Github popüler git depoları olduğu için yardımcı metotları bulunmaktadır.
 
-In both cases Bundler assumes the repositories are public.
+Her iki durumda da Bundler depoların halka açık (public) olduğunu farz eder.
 
-gem "my_gem", github: "tosbourn/my_gem"
-gem "my_gem", bitbucket: "tosbourn/my_gem"
+{% highlight ruby %}
+gem "my_gem", github: "sinankeskin/my_gem"
+gem "my_gem", bitbucket: "sinankeskin/my_gem"
+{% endhighlight %}
 
-You can specify a branch by using the :branch parameter.
+``:branch`` parametresi ile belli bir dalı belirtebilirsiniz.
 
-If both the username and the repository name are the same (as is the case with projects like Rails) then you can omit one.
+Eğer hem kullanıcı adı hem de depo adı aynı ise (örneğin Rails projesinde böyle) bir tanesini yazmayabilirsiniz.
 
+{% highlight ruby %}
 gem "rails", github: "rails"
 gem "rails", bitbucket: "rails"
+{% endhighlight %}
 
-Warning – You shouldn’t use the :github parameter until Bundler 2 comes out as right now it defaults to using the git:// protocol, which as we have already heard can leave you open to man-in-the-middle attacks.
+**Dikkat** –  Bundler 2 yayınlanana kadar ``:github`` parametresini kullanmamalısınız. Şu anda varsayılan olarak ``git://`` protokolünü kullandığı için daha önce de söylediğimiz gibi ortadaki adam (man-in-the-middle) saldırısına karşı savunmasız durumdadır.
 
-Another helper is :gist, this can be used if your project is hosted on Github as a gist. You can just use the gist ID as the path. Like :github and :bitbucket you can pass a :branch parameter into the method.
+Diğer yardımcı ise ``:gist``'dir. Bu eğer projeniz GitHub'da gist olarak tutuluyorsa faydalı olacaktır. Sadece gist ID girerek kullanabilirsiniz. ``:github`` ve ``:bitbucket`` parametrelerindeki gibi ``:branch`` parametresini metoda gönderebilirsiniz.
 
+{% highlight ruby %}
 gem "my_gem", :gist => "5935162112", branch: "my_custom_branch"
+{% endhighlight %}
 
-Include local Gem with the Path parameter
+**Yerel gem'i yol parametresi ile dâhil etmek**
 
-You can specify that your gem lives locally on your system by passing in the :path parameter.
+``:path`` parametesini kullanarak yerel bilgisayarınızdaki bir gem'i uygulamanıza dâhil edebilirsiniz.
 
+{% highlight ruby %}
 gem "my_gem", :path => "../my_path/my_gem"
+{% endhighlight %}
 
-If you specify a relative path (like I did above) they will be relative to the directory containing the Gemfile.
+Yukarıdaki gibi bağıl bir yol belirtirseniz Bundler ``Gemfile``'ın bulunduğu dizine göre gerçek yolu belirleyecektir.
 
-If you have an entire directory full of gems you want to include locally you can call this directory as block;
+Eğer birden fazla gem'in  bulunduğu bir klasörünüz varsa bunu blok ile belirtebilirsiniz.
 
+{% highlight ruby %}
 path "../my_path/gems" do
   gem "my_gem"
   gem "my_other_gem"
 end
+{% endhighlight %}
 
-One thing to note is that Bundler will not compile C extensions for gems that have been specified using :path.
-Conditionally Installing Gems
+Bilinmesi gereken diğer bir not ``:path`` parametresi ile gem yüklendiğinde C uzantılarının derlenmeyeceğidir.
 
-Sometimes you want to only install a gem if some prerequisite is true, for example if there is a program available on your system.
+**Şarta bağlı gem yükleme**
 
-This method accepts a proc or a lambda. In this example we only want to install a gem if we are on a Mac.
+Bazen sadece belli bir şart doğru ise gem'in yüklenmesini isteyebilirsiniz. Mesela sadece bir uygulama sisteminize varsa gem yüklenebilmelidir.
 
+Bu metod ``proc`` ya da ``lambda`` kabul eder. Bu örnekte sadece Mac üzerinde çalışıldığında gem yüklecektir.
+
+{% highlight ruby %}
 install_if -> { RUBY_PLATFORM =~ /darwin/ } do
   gem "my_osx_gem"
 end
+{% endhighlight %}
 
-Fin
+**Finito**
 
-Thanks for reading this guide, hopefully you found it useful.
+Okuduğunuz için teşekkürler, umarım yardımcı olmuştur.
+
+> Bu benim ilk makale çevirim. Uzun zamandır bir blog kurma düşüncem vardı. Nihayet gerçekleşti. Düşüncelerinizi twitter üzerinden duymak isterim. Teşekkürler.
+
+**Yazar ve Kaynak**
+
+I would like to thank [Toby Osbourn][twitter-toby] for letting me to translate amazing blog post. Original blog post: [What is a Gemfile][what-is-the-gemfile]
+
+[twitter-toby]: https://twitter.com/tosbourn
+[what-is-the-gemfile]: http://tosbourn.com/what-is-the-gemfile/
