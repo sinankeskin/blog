@@ -4,7 +4,7 @@ title:  "Gemfile nedir?"
 date:   2016-08-01 00:00:00 +0200
 categories: jekyll update
 ---
-Ruby geliştiricileri sıklıkla ``Gemfile`` kullanır ve bir çoğumuz temel özelliklerini biliriz. Bu makalede ``Gemfile`` için inebildiğimiz kadar derine inmeye çalışacağız.
+Ruby geliştiricileri sıklıkla ``Gemfile`` kullanır ve birçoğumuz temel özelliklerini biliriz. Bu makalede ``Gemfile`` için inebildiğimiz kadar derine inmeye çalışacağız.
 
 **Gemfile nedir?**
 
@@ -349,7 +349,7 @@ Bilinmesi gereken diğer bir not ``:path`` parametresi ile gem yüklendiğinde C
 
 **Şarta bağlı gem yükleme**
 
-Bazen sadece belli bir şart doğru ise gem'in yüklenmesini isteyebilirsiniz. Mesela sadece bir uygulama sisteminize varsa gem yüklenebilmelidir.
+Bazen sadece belli bir şart doğru ise gem'in yüklenmesini isteyebilirsiniz. Mesela sadece bir uygulama sisteminizde varsa gem yüklenebilmelidir.
 
 Bu metod ``proc`` ya da ``lambda`` kabul eder. Bu örnekte sadece Mac üzerinde çalışıldığında gem yüklecektir.
 
