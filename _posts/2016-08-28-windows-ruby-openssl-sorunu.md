@@ -8,7 +8,7 @@ Ruby'de *net/http* kütüphanesi içerisinde uzun zamandır süregelen SSL serti
 
 [Rails Installer](http://railsinstaller.org) içerisindeki OpenSSL kütüphanesinde herhangi bir sertifika yetkilileri dosyası tanımlı değil. O halde, gidip [curl](http://curl.haxx.se/ca/) sitesinden bu dosyayı alalım.
 
-Peki en nihayetinde bunu Ruby için yaptığımıza göre neden indirip kurma işini neden Ruby'e bırakmıyoruz?
+Peki en nihayetinde bunu Ruby için yaptığımıza göre neden indirip kurma işini de Ruby'e bırakmıyoruz?
 
 # Kurulum
 
