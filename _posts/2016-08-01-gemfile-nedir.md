@@ -1,8 +1,6 @@
 ---
 layout: post
-title:  "Gemfile nedir?"
-date:   2016-08-01 00:00:00 +0200
-categories: jekyll update
+title:  Gemfile nedir?
 ---
 Ruby geliştiricileri sıklıkla ``Gemfile`` kullanır ve birçoğumuz temel özelliklerini biliriz. Bu makalede ``Gemfile`` için inebildiğimiz kadar derine inmeye çalışacağız.
 
