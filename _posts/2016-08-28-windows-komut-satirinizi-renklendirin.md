@@ -29,11 +29,11 @@ Eğer dosyaları işletim sisteminin doğrudan ulaşamayacağı bir klasöre ç�
 
 ANSICON'un kendini AutoRun'a kopyalamasını sağlayabilirsiniz.
 
-Komut satırını bir sonraki açışınızda ANSICON kendini yükleyecektir ve artık Windows üzerinde Ruby on Rails uygulamarı oluştururken konsol Linux'deki gibi renklenecektir.
+Komut satırını bir sonraki açışınızda ANSICON kendini yükleyecektir ve artık Windows üzerinde Ruby on Rails uygulamaları oluştururken konsol Linux'deki gibi renklenecektir.
 
 ![Windows Renkli](/assets/images/windows_renkli_cmd.png)
 
-Artık ANSI renk kaçış kodu kullanan tüm konsol uygulamarı Windows'ta da doğru görünecektir.
+Artık ANSI renk kaçış kodu kullanan tüm konsol uygulamaları Windows'ta da doğru görünecektir.
 
 Son olarak Powershell'de çalıştıracağınız konsol uygulamalarınızın da renkleneceğini söyleyerek bitirelim.
 

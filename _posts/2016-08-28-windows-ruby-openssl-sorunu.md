@@ -18,7 +18,7 @@ Bu yöntem bilgisayarınızda [Rails Installer](http://railsinstaller.org)'ın k
 
 Aşağıdaki Ruby betiğini *Masaüstü* klasörünüze kaydedin. [https://gist.github.com/raw/867550/win_fetch_cacerts.rb](https://gist.github.com/raw/867550/win_fetch_cacerts.rb).
 
-Komut satırında bu betiği aşağıdaki gibi çalıştırın.:
+Komut satırında bu betiği aşağıdaki gibi çalıştırın:
 
     ruby "%USERPROFILE%\Desktop\win_fetch_cacerts.rb"
 
