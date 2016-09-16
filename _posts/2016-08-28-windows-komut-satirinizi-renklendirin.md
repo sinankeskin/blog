@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Windows komut satırınızı renklendirin
+comments: true
 ---
 Windows harici işletim sistemlerinde [ANSI renk kaçış kodları](https://en.wikipedia.org/wiki/ANSI_escape_code) tümleşik olarak bulunuyor.
 Özellikle Ruby on Rails ile çalışırken öncelikle göze çok hoş görünüyor sonrasında da farkındalığı arttırarak geliştiriciye fayda sağlıyor.

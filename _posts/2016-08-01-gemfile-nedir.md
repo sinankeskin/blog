@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  Gemfile nedir?
+comments: true
 ---
 Ruby geliştiricileri sıklıkla ``Gemfile`` kullanır ve birçoğumuz temel özelliklerini biliriz. Bu makalede ``Gemfile`` için inebildiğimiz kadar derine inmeye çalışacağız.
 

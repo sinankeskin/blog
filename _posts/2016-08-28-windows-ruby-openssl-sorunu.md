@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Windows Ruby OpenSSL sorunu
+comments: true
 ---
 # Nedir?
 
