@@ -8,7 +8,7 @@ url: http://kesk.in # site url
 baseurl: null # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
-google_analytics: UA-XXXXX-XX
+google_analytics: UA-102614012-1
 repo: http://github.com/sinankeskin/sinankeskin.github.io
 disqus_shortname: "kesk-in"
 twitter_username: "_khons"
@@ -32,12 +32,12 @@ author:
   name     : "Sinan Keskin"
   job      : "Freelance Developer"
   bio      : "C#, Java, Ruby"
-  thumb    : /images/author.jpg
+  thumb    : assets/images/author.jpg
   email    : sinan@kesk.in
   url      : http://kesk.in
   github   : http://github.com/sinankeskin
   twitter  : http://twitter.com/_khons
-  facebook : https://www.facebook.com/marcopascha
+  facebook : https://www.facebook.com/developer.khons
   linkedin : https://www.linkedin.com/in/sinan-keskin-a3524732
 
 # social settings
@@ -45,7 +45,7 @@ og_locale: "tr_TR"
 twitter_card: "summary_large_image"
 twitter_site: "@_khons"
 
-gems:
+plugins:
   - bourbon
   - jekyll-paginate
 
