@@ -1,15 +1,13 @@
-# Thinkspace v1
+# Thinkspace
 
-Just another minimalist Jekyll theme that focuses on technical writing. Designed for engineers to write their ranting and findings.
+> Thinkspace is just another minimalist Jekyll theme which designed for technical writing blog.
 
-[**Demo**](http://heiswayi.github.io/thinkspace/)
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![GENERATOR](https://img.shields.io/badge/made_with-jekyll-blue.svg) ![VERSION](https://img.shields.io/badge/current_version-2.5-green.svg) ![TRAVIS-CI](https://travis-ci.org/heiswayi/thinkspace.svg?branch=master)
 
-[**Here is how to download/use this theme**](http://heiswayi.github.io/thinkspace/2016/how-to-download-or-use-this-theme/)
+- **Demo:** https://heiswayi.github.io/thinkspace/
 
-### Screenshot
+![SCREENSHOT](https://i.imgur.com/1YS078k.png)
 
-![Screenshot](http://i.imgur.com/WHcnbYF.png)
-
-### License
+## License
 
 [MIT](LICENSE.md)
