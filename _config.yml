@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 
 # SEO settings
-title: "Khons"
-title2: "Blog" # default: ""
+title_left: "Khons"
+title_right: "Blog" # default: ""
 description: "Sinan Keskin aka Khons blog."
 keywords: "Blog about C#, Java, Ruby"
 url: http://kesk.in # site url
@@ -14,22 +13,6 @@ repo: http://github.com/sinankeskin/sinankeskin.github.io
 disqus_shortname: "kesk-in"
 twitter_username: "_khons"
 comments: true
-=======
-# Site settings
-title_left    : "Think"
-title_right   : "space" # default: ""
-description   : "Minimalist Jekyll theme for technical writing blog."
-keywords      : "Jekyll, theme, free, download, SEO, blog, web, minimalist, thinkspace"
-url           : https://heiswayi.github.io/thinkspace # site url
-baseurl       : "" # apply repo name like "/myproject" if used under gh-pages branch, else (under master branch) just leave empty/blank
-cover         : "" # image uri like logo/cover image for site seo
-
-google_analytics  : UA-XXXXX-XX
-twitter_username  : ""
-comments_enabled  : false # if enabled (set to true), please provide your disqus_username
-disqus_shortname  : ""
-postshare_enabled : false
->>>>>>> 613b13539d721a581057ae9b0c5b74293d0e62e9
 
 # Build settings
 permalink   : /:year/:title/
@@ -46,7 +29,6 @@ sass:
 
 # Author settings
 author:
-<<<<<<< HEAD
   name     : "Sinan Keskin"
   job      : "Freelance Developer"
   bio      : "C#, Java, Ruby"
@@ -64,12 +46,6 @@ twitter_card: "summary_large_image"
 twitter_site: "@_khons"
 
 plugins:
-=======
-  name     : "John Doe"
-
-plugins:
-  - jekyll-sitemap
->>>>>>> 613b13539d721a581057ae9b0c5b74293d0e62e9
   - bourbon
   - jekyll-paginate
 
