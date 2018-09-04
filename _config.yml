@@ -4,12 +4,12 @@ title_left: "Khons"
 title_right: "Blog" # default: ""
 description: "Sinan Keskin aka Khons blog."
 keywords: "Blog about C#, Java, Ruby"
-url: http://kesk.in # site url
+url: https://kesk.in # site url
 baseurl: null # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
 google_analytics: UA-102614012-1
-repo: http://github.com/sinankeskin/sinankeskin.github.io
+repo: https://github.com/sinankeskin/sinankeskin.github.io
 disqus_shortname: "kesk-in"
 twitter_username: "_khons"
 comments: true
@@ -34,9 +34,9 @@ author:
   bio      : "C#, Java, Ruby"
   thumb    : assets/images/author.jpg
   email    : sinan@kesk.in
-  url      : http://kesk.in
-  github   : http://github.com/sinankeskin
-  twitter  : http://twitter.com/_khons
+  url      : https://kesk.in
+  github   : https://github.com/sinankeskin
+  twitter  : https://twitter.com/_khons
   facebook : https://www.facebook.com/developer.khons
   linkedin : https://www.linkedin.com/in/sinan-keskin-a3524732
 
