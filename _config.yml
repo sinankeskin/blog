@@ -5,7 +5,7 @@ title_right: "Blog" # default: ""
 description: "Sinan Keskin aka Khons blog."
 keywords: "Blog about C#, Java, Ruby"
 url: https://kesk.in # site url
-baseurl: null # apply repo name if use it under gh-pages branch
+baseurl: https://kesk.in # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
 google_analytics: UA-102614012-1
