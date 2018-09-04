@@ -12,7 +12,7 @@ google_analytics: UA-102614012-1
 repo: https://github.com/sinankeskin/sinankeskin.github.io
 disqus_shortname: "kesk-in"
 twitter_username: "_khons"
-comments: true
+comments_enabled: true
 
 # Build settings
 permalink   : /:year/:title/
